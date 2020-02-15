@@ -21,7 +21,7 @@ source venv/bin/activate
 Clone repository and install requirements
 
 ```
-git clone foobar
+git clone https://github.com/knielbo/kartina.git
 pip install requirements.txt
 ```
 
