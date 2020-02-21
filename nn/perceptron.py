@@ -10,5 +10,10 @@ class Perceptron:
         self.W = np.random.randn(N + 1) / np.sqrt(N)
         self.alpha = alpha
     
+    def step(self, x):
+        # apply step function
+        return 1 if x > 0 else 0
+
     
+
 
