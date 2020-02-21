@@ -22,7 +22,7 @@ class Perceptron:
         for epoch in np.arange(0, epochs):
             # loop over data points
             for (x, target) in zip(X, y):
-                # dot product of x and W and pass through act
+                # dot product of x and W to act
                 p = self.step(np.dot(x, self.W))
 
                 # only update W if p is not target
@@ -33,7 +33,18 @@ class Perceptron:
                     # update W
                     self.W += -self.alpha * error * x
     
-    
+    def predict(self, X, addBias=True):
+        # ensure inpus is matrix
+        X = np.atleast_2d(X)
+
+        # check if bias column is added
+        if addBias:
+            # insert bias column
+            X = np.c_[X, np.ones((X.shape[0]))]
+
+        # dot product of X and W to act
+        return self.step(np.dot(X, self.W))
+
 
 
 
