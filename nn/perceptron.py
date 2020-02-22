@@ -1,5 +1,6 @@
 #!/home/knielbo/virtenvs/cv/bin/python
 """
+Rosenblatt's Perceptron
 """
 # import the necessary packages
 import numpy as np
