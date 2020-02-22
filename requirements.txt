@@ -18,11 +18,4 @@ tensorflow		# CPU Version of TensorFlow.
 # tensorflow-gpu	# GPU version of TensorFlow.
 
 ################################################################
-# Some tutorials use other individual Python packages.
-# Uncomment the relevant lines for the tutorials you want to run.
-
-# gym[atari]  # Tutorial #16 on Reinforcement Learning.
-# pandas      # Tutorial #23 on Time-Series Prediction.
-
-################################################################
 
