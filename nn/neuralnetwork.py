@@ -34,3 +34,75 @@ class NeuralNetwork:
         # derivate of the sigmoid activation function, assuming x has been passed through 
         # said function
         return x * (1 - x)
+    
+    def fit(self, X, y, epochs=1000, displayUpdate=100):
+        # insert trainable bias column
+        X = np.c_[X, np.ones((X.shape[0]))]
+
+        # loop over epochs
+        for epoch in np.arange(0, epochs):
+            # loop over individual training points
+            for (x, target) in zip(X, y):
+                self.fit_partial(x, target)
+            
+            # check diaplay
+            if epoch == 0 or (epoch + 1) % displayUpdate == 0:
+                loss = self.calculate_loss(X, y)
+                print("[INFO] epoch={}, loss={:.7f}".format(epoch + 1, loss))
+            
+    def fit_partial(self, x, y):
+        # construct list of output activations for each layer
+        # first activation is just the input
+        A = [np.atleast_2d(x)]# A-ctivation list
+
+        # FEEDFORWARD
+        # loop through layers in network on forward pass
+        for layer in np.arange(0, len(self.W)):
+            # feedforward activation at the current layers as dot product
+            # between activation and weight matrix
+            # > net input to current layer
+            net = A[layer].dot(self.W[layer])
+
+            # compute net output
+            out = self.sigmoid(net)
+
+            # append to activation list
+            A.append(out)
+
+        # BACKPROPAGATION
+        # first phase of backpropagation is to compute the
+        # difference between our *prediction* (the final output
+        # activation in the activation list) and the true target value
+        error = A[-1] - y
+
+        # apply chain rule and build list of deltas D; the first entry in deltas
+        # is the eror of the output layer time the derivative of the activation function
+        # for the output value
+        D = [error * self.sigmoid_deriv(A[-1])]
+
+        # loop in reverse order using the chain rule for each layer
+        for layer in np.arange(len(A) - 2, 0, -1):
+            # the delta for the current layer is equal to the delate of the 
+            # previous layer dotted with the weight matrix of the current layer,
+            # followed by multiplying the delta by the derivative of the nonlinear
+            # activation for the activations of the current layer
+            delta = D[-1].dot(self.W[layer].T)
+            delta = delta * self.sigmoid_deriv(A[layer])
+            D.append(delta)
+
+        # reverse order of deltas for use in forward pass during weight update
+        D = D[::-1]
+
+        # WEIGHT UPDATE PHASE
+        # forward pass, loop over layers
+        for layer in np.arange(0, len(self.W)):
+            # update weights by taking the dot product of the layer activations
+            # with the respective deltas, then multiplying this value by the 
+            # learning rate and add weight matrix
+            # > actual learning phase
+            self.W[layer] += -self.alpha * A[layer].T.dot(D[layer])
+    
+
+
+
+
