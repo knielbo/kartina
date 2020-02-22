@@ -29,3 +29,8 @@ class NeuralNetwork:
     def sigmoid(self, x):
         # activation function
         return 1.0 / (1 + np.exp(-x))
+
+    def sigmoid_deriv(self, x):
+        # derivate of the sigmoid activation function, assuming x has been passed through 
+        # said function
+        return x * (1 - x)
