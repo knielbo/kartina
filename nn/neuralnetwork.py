@@ -121,6 +121,14 @@ class NeuralNetwork:
         # return predicted value
         return p
     
+    def calculate_loss(self, X, targets):
+        # make predictions for input and compute loss
+        targets = np.atleast_2d(targets)
+        predictions = self.predict(X, addBias=False)
+        loss = .5 * np.sum((predictions - targets) ** 2)
+
+        return loss
+    
 
 
 
