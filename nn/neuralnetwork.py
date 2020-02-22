@@ -109,7 +109,7 @@ class NeuralNetwork:
 
         # check if bias column should be added
         if addBias:
-            p = np.c_[X, np.ones((p.shape[0]))]
+            p = np.c_[p, np.ones((p.shape[0]))]
         
         # forward pass over layers
         for layer in np.arange(0, len(self.W)):
