@@ -25,3 +25,7 @@ class NeuralNetwork:
     def __repr__(self):
         # construct & return string of neural network architecture
         return "NeuralNetwork: {}".format("-".join(str(l) for l in self.layers))
+    
+    def sigmoid(self, x):
+        # activation function
+        return 1.0 / (1 + np.exp(-x))
