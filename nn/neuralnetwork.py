@@ -101,6 +101,25 @@ class NeuralNetwork:
             # learning rate and add weight matrix
             # > actual learning phase
             self.W[layer] += -self.alpha * A[layer].T.dot(D[layer])
+
+    def predict(self, X, addBias=True):
+        # init output prediction as input features to forward propagate
+        # through the network
+        p = np.atleast_2d(X)
+
+        # check if bias column should be added
+        if addBias:
+            p = np.c_[X, np.ones((p.shape[0]))]
+        
+        # forward pass over layers
+        for layer in np.arange(0, len(self.W)):
+            # compute output predictions as dot product of activation value p
+            # and the weight matrix associated with the current layer, then
+            # passing the value through a nonlinear activation function
+            p = self.sigmoid(np.dot(p, self.W[layer]))
+        
+        # return predicted value
+        return p
     
 
 
